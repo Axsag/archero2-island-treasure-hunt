@@ -1,0 +1,95 @@
+/* QuestCard.module.css */
+.container {
+    background-color: white;
+    color: black;
+}
+
+.dark .container {
+    background-color: #2d3748;
+    color: #d6bcfa;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    max-width: 20rem;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 2px rgb(0 0 0 / 0.05);
+    background-color: #fff;
+    color: #000;
+}
+
+.darkContainer {
+    background-color: #2d3748;
+    color: #d6bcfa;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 600;
+    color: #6b21a8;
+}
+
+.darkHeader {
+    color: #d6bcfa;
+}
+
+.breakpoints {
+    display: flex;
+    gap: 0.25rem;
+    cursor: default;
+}
+
+.breakpointSquare {
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: 0.125rem;
+}
+
+.breakpointReached {
+    background-color: #22c55e;
+}
+
+.breakpointNotReached {
+    background-color: #ef4444;
+}
+
+.progressWrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+}
+
+.inputWrapper {
+    width: 120px;
+}
+
+.optionalCheckboxWrapper {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 0.5rem;
+}
+
+.checkboxLabel {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: #4b5563;
+    cursor: pointer;
+    user-select: none;
+}
+
+.darkCheckboxLabel {
+    color: #9ca3af;
+}
+
+.checkboxInput {
+    cursor: pointer;
+}
