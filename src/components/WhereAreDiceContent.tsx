@@ -4,6 +4,7 @@ import { IntegerInput } from "./IntegerInput";
 import { quests } from "@/utils/constants";
 import { Quest } from "@/utils/types";
 import styles from './Row.module.css';
+import { basePath } from "@/utils/constants";
 
 
 type ProgressBarProps = {
@@ -66,50 +67,48 @@ const Row = (props: RowProps) => {
     const breakpointsTooltip = `Breakpoints: ${quest.breakpoints[0].join(", ")}`;
 
     return (
-        <div className={`${styles.container} dark:${styles.darkContainer}`}>
-            {/* Header */}
-            <div className={`${styles.header} dark:${styles.darkHeader}`}>
-                <div>{quest.name}</div>
-                <div>{totalNumDice - numDiceLeft.current} / {totalNumDice}</div>
+        <div className={styles.questCard}>
+            {/* Top: title and input / max */}
+            <div className={styles.top}>
+                <div className={styles.title}>{quest.name}</div>
+                <input
+                    type="number"
+                    min={0}
+                    max={totalNumDice}
+                    placeholder={quest.placeholderText}
+                    onChange={(e) => handleProgressChange(parseInt(e.target.value))}
+                    value={totalNumDice - numDiceLeft.current}
+                    className={styles.numberInput}
+                />
+                <div className={styles.max}>/ {totalNumDice}</div>
             </div>
 
-            {/* Breakpoints */}
-            <div
-                className={styles.breakpoints}
-                title={breakpointsTooltip}
-                aria-label={breakpointsTooltip}
-            >
+            {/* Content: breakpoints with background image and labels */}
+            <div className={styles.content}>
                 {quest.breakpoints[0].map((bp, index) => {
                     const reached = numBreakpointsMet > index;
+                    const rewardImage = `${basePath}/dice.png`; // Example, customize as needed
+                    const rewardVal = reached ? '✔' : '5';
+
                     return (
                         <div
                             key={bp}
-                            className={`${styles.breakpointSquare} ${reached ? styles.breakpointReached : styles.breakpointNotReached}`}
+                            className={styles.reward}
+                            style={{ backgroundImage: `url(${rewardImage})` }}
                             title={`Breakpoint ${bp} - ${reached ? 'Reached' : 'Not reached'}`}
                             aria-label={`Breakpoint ${bp} - ${reached ? 'Reached' : 'Not reached'}`}
-                        />
+                        >
+                            <div className={`${styles.small} ${styles.above}`}>{bp}</div>
+                            <div className={`${styles.small} ${styles.cornerRight}`}>{rewardVal}</div>
+                        </div>
                     );
                 })}
-            </div>
-
-            {/* Progress */}
-            <div className={styles.progressWrapper}>
-                <div className={styles.inputWrapper}>
-                    <IntegerInput
-                        name="progressInput"
-                        placeholder={quest.placeholderText}
-                        onValueChange={handleProgressChange}
-                    />
-                </div>
-                <div className="flex-1">
-                    <ProgressBar percentDone={Math.round((numBreakpointsMet / numBreakpoints) * 100)} />
-                </div>
             </div>
 
             {/* Optional checkbox */}
             {quest.optional && (
                 <div className={styles.optionalCheckboxWrapper}>
-                    <label className={`${styles.checkboxLabel} dark:${styles.darkCheckboxLabel}`}>
+                    <label className={styles.checkboxLabel}>
                         Include in Total?
                         <input
                             name="includeCheckbox"
